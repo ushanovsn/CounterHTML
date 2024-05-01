@@ -7,4 +7,4 @@ It requires .Net Core 3.1 installed to run.
 
 By the specified URL the unique words and/or numbers on the page are counted. Params can be specified by checkboxes.
 
-![screenshot](https://github.com/ushanovsn/CounterHTML/blob/main/.pic/screenshot.jpg?raw=true)
+![screenshot](https://github.com/ushanovsn/CounterHTML/blob/master/.pic/screenshot.jpg?raw=true)
