@@ -1,0 +1,73 @@
+﻿<Window x:Class="CounterHTML.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CounterHTML"
+        mc:Ignorable="d"
+        Title="Статистика уникальных слов" Height="450" Width="600" MinHeight="300" MinWidth="500">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.9*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Указываем URL и жмем ОК для посчета уникальных слов на странице."
+                   VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Vertical" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" HorizontalAlignment="Stretch" Width="auto"
+                         Text="{Binding urlAddress, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding blockUI}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{Binding makeAnalize}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button Grid.Column="1" Width="20" Content="OK" HorizontalAlignment="Center"
+                        Command="{Binding makeAnalize}" IsEnabled="{Binding blockUI}"/>
+            </Grid>
+            <CheckBox Content="Учитывать регистр" Margin="0,5,0,5" IsThreeState="False"
+                      IsChecked="{Binding checkRegister}" IsEnabled="{Binding blockUI}"/>
+            <CheckBox Content="Учитывать числа" Margin="0,5,0,5" IsThreeState="False"
+                      IsChecked="{Binding acceptNumbers}" IsEnabled="{Binding blockUI}"/>
+            <CheckBox Content="Сохранять дампы в файл" Margin="0,5,0,5" IsThreeState="False"
+                      IsChecked="{Binding needDumpFile}" IsEnabled="{Binding blockUI}"/>
+            <CheckBox Content="Сохранять лог в файл" Margin="0,5,0,5" IsThreeState="False"
+                      IsChecked="{Binding needDumpLog}" IsEnabled="{Binding blockUI}"/>
+        </StackPanel>
+        
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True" TextWrapping="Wrap"
+                         Text="{Binding logBox}"/>
+            </ScrollViewer>
+        </Grid>
+
+        <DataGrid Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True"
+                  HorizontalGridLinesBrush="WhiteSmoke" VerticalGridLinesBrush="WhiteSmoke"
+                  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" SelectionMode="Single"
+                  ColumnWidth="*" CanUserSortColumns="True" RowHeaderWidth="0" CanUserReorderColumns="False"
+                  ItemsSource="{Binding resultList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" MinWidth="30" MaxWidth="50" Binding="{Binding Num}"/>
+                <DataGridTextColumn Header="Найденное слово" MinWidth="110" Binding="{Binding fWord}"/>
+                <DataGridTextColumn Header="Кол-во упоминаний"  MinWidth="120" Binding="{Binding cntWord}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Foreground="Gray"
+                    Text="{Binding status}"/>
+    </Grid>
+</Window>
